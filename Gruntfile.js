@@ -16,7 +16,9 @@ module.exports = function (grunt) {
   });
 
   grunt.loadNpmTasks('grunt-markdown');
+  grunt.loadTasks('tasks');
 
   grunt.registerTask('default', 'markdown');
+  grunt.registerTask('update', 'update-index');
 
 };
