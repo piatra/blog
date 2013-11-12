@@ -12,9 +12,9 @@ module.exports = function (grunt) {
 
     content = files.map(createHTML);
     var $ = cheerio.load(fs.readFileSync('dest/src/index.html'));
-    $('body').empty();
+    $('.articles').empty();
     content.forEach(function (article) {
-      $('body').append(article.title);
+      $('.articles').append(article.title);
     });
 
     fs.writeFileSync('dest/src/index.html', $.html());
@@ -26,7 +26,7 @@ module.exports = function (grunt) {
 function createHTML (file) {
   return {
     filename: file.filename,
-    title: '<h3>' + file.title + '</h3>'
+    title: '<h3><a href="' + file.filename + '.html">' + file.title + '</a></h3>'
   }
 }
 

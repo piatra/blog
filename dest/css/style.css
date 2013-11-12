@@ -1,0 +1,218 @@
+body {
+  background: #fefefe;
+  font: 20px/1.5 'Georgia Pro', georgia, serif;
+  color: #333332;
+  -webkit-text-size-adjust:100%;
+  min-height:100%;
+}
+
+.container {
+  width: 60%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.articles {
+  width: 70%;
+  float: left;
+}
+
+.about {
+  font-family: 'Lato', sans-serif;
+  width: 20%;
+  float: right;
+  text-align:right;
+  margin-top: 1.5rem;
+}
+
+.about li, .about a {
+  font-size: 0.667rem;
+  list-style: none;
+  color: #888;
+}
+
+li strong {
+  font-size: 1rem;
+  color: #333332;
+}
+
+a {
+  color: #333332;
+  text-decoration: none;
+}
+
+article a {
+  border-bottom: 1px solid #333332;
+}
+
+.articles > h3 {
+  border-bottom: 1px dotted #888;
+}
+
+h1 {
+  font-family: 'Lato', sans-serif;
+  font-size: 3.375rem;
+  font-weight: 900;
+  letter-spacing: -2px;
+}
+
+.article-resume {
+  font-size: 1.5rem;
+  color: #888;
+}
+
+.mugshot {
+  width: 85px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 0 5px #aaa;
+  -webkit-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  transition-duration: 1s;
+}
+
+.mugshot:hover {
+  -webkit-transform: rotateY(360deg);
+  -moz-transform: rotateY(360deg);
+  transform: rotateY(360deg);
+}
+
+h3 {
+  font-family: 'Droid Serif', serif;
+}
+
+.article-title {
+  font-size: 1.875rem;
+  border-bottom: 1px solid #f2f2f0;
+  font-weight: bold;
+}
+
+pre code {
+  display: block; padding: 0.5em;
+  color: #333;
+  background: #f8f8ff;
+  font-size: 1rem;
+  overflow-x: auto;
+}
+pre .comment,
+pre .template_comment,
+pre .diff .header,
+pre .javadoc {
+  color: #998;
+  font-style: italic
+}
+pre .keyword,
+pre .css .rule .keyword,
+pre .winutils,
+pre .javascript .title,
+pre .nginx .title,
+pre .subst,
+pre .request,
+pre .status {
+  color: #333;
+  font-weight: bold
+}
+pre .number,
+pre .hexcolor,
+pre .ruby .constant {
+  color: #099;
+}
+pre .string,
+pre .tag .value,
+pre .phpdoc,
+pre .tex .formula {
+  color: #d14
+}
+pre .title,
+pre .id {
+  color: #900;
+  font-weight: bold
+}
+pre .javascript .title,
+pre .lisp .title,
+pre .clojure .title,
+pre .subst {
+  font-weight: normal
+}
+pre .class .title,
+pre .haskell .type,
+pre .vhdl .literal,
+pre .tex .command {
+  color: #458;
+  font-weight: bold
+}
+pre .tag,
+pre .tag .title,
+pre .rules .property,
+pre .django .tag .keyword {
+  color: #000080;
+  font-weight: normal
+}
+pre .attribute,
+pre .variable,
+pre .lisp .body {
+  color: #008080
+}
+pre .regexp {
+  color: #009926
+}
+pre .class {
+  color: #458;
+  font-weight: bold
+}
+pre .symbol,
+pre .ruby .symbol .string,
+pre .lisp .keyword,
+pre .tex .special,
+pre .prompt {
+  color: #990073
+}
+pre .built_in,
+pre .lisp .title,
+pre .clojure .built_in {
+  color: #0086b3
+}
+pre .preprocessor,
+pre .pi,
+pre .doctype,
+pre .shebang,
+pre .cdata {
+  color: #999;
+  font-weight: bold
+}
+pre .deletion {
+  background: #fdd
+}
+pre .addition {
+background: #dfd
+}
+pre .diff .change {
+  background: #0086b3
+}
+pre .chunk {
+  color: #aaa
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  .container {
+    .width: 90%;
+  }
+  .articles {
+    width: 100%;
+  }
+  .about li {
+    display: inline;
+  }
+}
+
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px) {
+  .container {
+    width: 90%;
+  }
+}

@@ -10,7 +10,10 @@ module.exports = function (grunt) {
           dest: 'dest/',
           ext: '.html'
         }
-        ]
+        ],
+        options: {
+          template: 'dest/src/template.jst',
+        }
       }
     }
   });
