@@ -14,7 +14,7 @@ body {
 
 .articles {
   width: 70%;
-  float: left;
+  display: inline-block;
 }
 
 .about {
@@ -194,25 +194,22 @@ pre .chunk {
 }
 
 @media only screen
-and (min-device-width : 320px)
-and (max-device-width : 480px) {
+and (min-width : 320px)
+and (max-width : 680px) {
   .container {
-    .width: 90%;
+    width: 90%;
   }
   .articles {
     width: 100%;
   }
+  .about {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
   .about li {
-    display: inline;
+    display: inline-block;
   }
 }
 
 
-/* iPads (portrait and landscape) ----------- */
-@media only screen
-and (min-device-width : 768px)
-and (max-device-width : 1024px) {
-  .container {
-    width: 90%;
-  }
-}
