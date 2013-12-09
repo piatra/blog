@@ -4,7 +4,8 @@
   "description": "my blog. mostly *js. always web",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "scp -r dest/* andrei@andreio.net:blog/"
   },
   "repository": {
     "type": "git",

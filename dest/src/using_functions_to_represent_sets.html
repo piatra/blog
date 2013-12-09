@@ -1,5 +1,6 @@
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, user-scalable=no">
   <title>
     Andrei's Blog
   </title>
@@ -10,9 +11,20 @@
 </head>
 
 <body>
-
+<div class="about">
+  <figure>
+    <img src="../img/me.png" class="mugshot">
+    <br>
+    <strong>Andrei Oprea</strong>
+  </figure>
+  <li>
+      &sdot; <a href="http://github.com/piatra">github</a> &sdot;
+      <a href="http://twitter.com/ndreio">twitter</a> &sdot;
+      <a href="mailto:me@andreio.net">email</a> &sdot;
+  </li>
+  <h5><a href="/">Back</a></h5>
+</div>
 <div class="container">
-  <h1><a href="/">Andrei's Blog</a></h1>
   <div class="articles"><p><strong>Re: Using Functions to Represent Sets</strong></p>
 <p><em>This article is a reply to <a href="http://www.mihneadb.net/post/using-functions-to-represent-sets/">Using Functions to Represent Sets</a></em></p>
 <p>The gist of the article is that by using functions you get several advantages which I wanted to show again because I found them really interesting and also provide a similar implementation but this time in ClojureScript.</p>
@@ -83,17 +95,6 @@ thirdSet(15) // true</code></pre>
 (contains 15 gtten) // true
 (contains 3 (union even? gtten)) // false</code></pre>
 <p>You can see the full implementation <a href="https://www.refheap.com/20618">here</a></p>
-</div>
-<div class="about">
-  <img src="../img/me.png" class="mugshot">
-  <li><strong>Andrei Oprea</strong></li>
-  <li>Open Source enthusiast</li><li>
-  </li><li>Computer Science student</li>
-  <li>Romania
-  </li><li>
-      &sdot; <a href="http://github.com/piatra">github</a> &sdot;
-      <a href="http://twitter.com/ndreio">twitter</a> &sdot;
-  </li>
 </div>
 
 
