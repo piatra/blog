@@ -6,6 +6,12 @@ body {
   min-height:100%;
 }
 
+hr {
+    height: 1px;
+    border: none;
+    background: #333332;
+}
+
 .container {
   width: 50%;
   margin: 0 auto;
@@ -45,13 +51,17 @@ a {
   text-decoration: none;
 }
 
-article a {
-  border-bottom: 1px solid #333332;
+.articles a {
+  border-bottom: 1px dotted #333332;
 }
 
 .articles > h3 {
   border-bottom: 1px dotted #888;
 }
+
+    .articles h3 a {
+        border: none;
+    }
 
 .banner {
   text-align:center;

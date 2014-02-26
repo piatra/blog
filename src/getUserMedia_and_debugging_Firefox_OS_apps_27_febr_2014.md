@@ -4,9 +4,9 @@
 In the nightly version of Firefox OS (_currently 1.4_) support for capturing video stream using getUserMedia has landed.
 This article is about how to make a basic demo that does that and how you can debug your app.
 
-The code for getting access to the phone camera is very straight forward, we'll get to that in a minute. First you should know that you cannot get access without providing an App Manifest file.
+The code for getting access to the phone camera is very straight forward ([GitHub gist](https://gist.github.com/piatra/9240045)) , we'll get to that in a minute. First you should know that you cannot get access without providing an [App Manifest file](https://developer.mozilla.org/en-US/Apps/Developing/App_permissions).
 
-An **App Manifest** is a JSON file that tells the browser _how to interact with the web application_. An example can be found [here in the MDN](https://developer.mozilla.org/en-US/Apps/Developing/Manifest#Example_manifest) with more documentation, or (a more complex one) you can grab the one provided in the [boilerplate Firefox OS app](https://github.com/robnyman/Firefox-OS-Boilerplate-App/blob/gh-pages/manifest.webapp). This should include the following:
+An **App Manifest** is a JSON file that tells the browser _how to interact with the web application_. An example can be found [here in the MDN](https://developer.mozilla.org/en-US/Apps/Developing/Manifest#Example_manifest) with more documentation, or grab the one provided in the [boilerplate Firefox OS app](https://github.com/robnyman/Firefox-OS-Boilerplate-App/blob/gh-pages/manifest.webapp). This should include the following:
 
 ````
 ....
@@ -48,6 +48,7 @@ Fixed! Great. As you can see I've also included a capture button that takes a sn
 
 # Debugging your application
 
+The main tool for debugging applications is the App Manager. This contains most of the tools in the Developer Tools (DOM Inspector, Console, Debugger, Style Editor) hooked up to your physical device or simulator.
 Debugging your Firefox OS application is really easy once you have everything set up.
 
 ### Prerequisites
@@ -58,7 +59,7 @@ Debugging your Firefox OS application is really easy once you have everything se
 SUBSYSTEM=="usb", ATTR{idVendor}=="05c6", MODE="0666", GROUP="plugdev"
 ````
 
-Where idVendor is a device specific code, `05c6` is the code for the Keon deviec
+Where idVendor is a device specific code, `05c6` is the code for the Keon device. Make sure to reboot the device if you have issues or [read more about troubleshooting](https://developer.mozilla.org/en-US/Firefox_OS/Using_the_App_Manager#Troubleshooting)
 
 ### Using the App manager
 The [App manager](https://developer.mozilla.org/en-US/Firefox_OS/Using_the_App_Manager) allows you to load applications in the browser and the send them to your device or to the [Firefox OS simulator](https://ftp.mozilla.org/pub/mozilla.org/labs/fxos-simulator/).

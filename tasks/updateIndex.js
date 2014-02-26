@@ -8,9 +8,13 @@ module.exports = function (grunt) {
     var cheerio = require('cheerio');
     var files = grunt.file.expand('src/*.md');
     files = files.map(extractName)
-    .map(createTitle)
+    .map(createTitle);
+
 
     content = files.map(createHTML);
+    content.sort(function(a, b) {
+        return b.date-a.date;
+    });
     var $ = cheerio.load(fs.readFileSync('dest/src/index.html'));
     $('.articles').empty();
     content.forEach(function (article) {
@@ -24,12 +28,13 @@ module.exports = function (grunt) {
 };
 
 function createHTML (file) {
-  var time = file.filename.split('_');
-  time = time.slice(time.length-3, time.length).join(' ');
+  file.title = file.title.split(' ');
+  var time = file.title.splice(file.title.length-3, 3).join(' ');
   return {
     filename: file.filename,
-    title: '<h3><a href="' + file.filename + '.html">' + file.title + '</a><time>'+time+'</time></h3>'
-  }
+    title: '<h3><a href="' + file.filename + '.html">' + file.title.join(' ') + '</a><time>'+time+'</time></h3>',
+    date: (new Date(time)).getTime()
+  };
 }
 
 function extractName (file) {
@@ -42,7 +47,7 @@ function createTitle (filename) {
   return {
     filename: filename,
     title: capitaliseTitle(title)
-  }
+  };
 }
 
 function capitaliseTitle (title) {

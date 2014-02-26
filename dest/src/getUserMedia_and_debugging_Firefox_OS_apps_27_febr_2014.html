@@ -1,0 +1,110 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <title>
+    Andrei's Blog
+  </title>
+  <link rel="styhesheet" href="../css/normalize.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Lato:900" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="about">
+  <figure>
+    <img src="../img/me.png" class="mugshot">
+    <br>
+    <strong>Andrei Oprea</strong>
+  </figure>
+  <li>
+      &sdot; <a href="http://github.com/piatra">github</a> &sdot;
+      <a href="http://twitter.com/ndreio">twitter</a> &sdot;
+      <a href="mailto:me@andreio.net">email</a> &sdot;
+  </li>
+  <h5><a href="/">Back</a></h5>
+</div>
+<div class="container">
+  <div class="articles"><h1 id="video-capture-debugging-in-firefox-os">Video capture &amp; debugging in Firefox OS</h1>
+<hr>
+<p>In the nightly version of Firefox OS (<em>currently 1.4</em>) support for capturing video stream using getUserMedia has landed.
+This article is about how to make a basic demo that does that and how you can debug your app.</p>
+<p>The code for getting access to the phone camera is very straight forward (<a href="https://gist.github.com/piatra/9240045">GitHub gist</a>) , we&#39;ll get to that in a minute. First you should know that you cannot get access without providing an <a href="https://developer.mozilla.org/en-US/Apps/Developing/App_permissions">App Manifest file</a>.</p>
+<p>An <strong>App Manifest</strong> is a JSON file that tells the browser <em>how to interact with the web application</em>. An example can be found <a href="https://developer.mozilla.org/en-US/Apps/Developing/Manifest#Example_manifest">here in the MDN</a> with more documentation, or grab the one provided in the <a href="https://github.com/robnyman/Firefox-OS-Boilerplate-App/blob/gh-pages/manifest.webapp">boilerplate Firefox OS app</a>. This should include the following:</p>
+<pre><code>....
+&quot;video-capture&quot;: {
+    &quot;description&quot;: &quot;get video&quot;
+}
+....</code></pre>
+<p>Now that we have that out of the way, the code that allows us to access the camera:</p>
+<pre><code>navigator.mozGetUserMedia({audio: true, video: true}, function(stream) {
+    video.src = window.URL.createObjectURL(stream);
+}, function(err) {
+    console.log(err);
+});</code></pre>
+<p>As you can see the code is very straight forward (notice the <em>moz</em> prefix) and this gets you very far.</p>
+<p><img src="http://imgur.com/GJ4WBQU.png" alt="ScreenShot"></p>
+<p>We get a live stream into the browser from our camera! Awesome!
+Current build of Firefox OS 1.4 has a bug that makes the video stream to be rotated 90deg.
+We can easily fix that with CSS.</p>
+<pre><code>    video {
+        -moz-transform:rotate(90deg);
+        transform:rotate(90deg);
+    }</code></pre>
+<p><img src="http://imgur.com/ugUIxmv.png" alt="ScreenShot"></p>
+<p>Fixed! Great. As you can see I&#39;ve also included a capture button that takes a snapshot of the current frame in a <code>&lt;canvas&gt;</code> element. This also includes a fix to rotate the image. You can see the entire code <a href="https://gist.github.com/piatra/9240045">in this gist</a> .</p>
+<h1 id="debugging-your-application">Debugging your application</h1>
+<p>The main tool for debugging applications is the App Manager. This contains most of the tools in the Developer Tools (DOM Inspector, Console, Debugger, Style Editor) hooked up to your physical device or simulator.
+Debugging your Firefox OS application is really easy once you have everything set up.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<ol>
+<li><a href="https://ftp.mozilla.org/pub/mozilla.org/labs/fxos-simulator/">ADB Helper add-on</a> helps manage the connection between the browser and the device</li>
+<li>(*) Optional. On Linux I had to set up udev correctly so that the system would detect the device. You need to create <code>/etc/udev/rules.d/51-android.rules</code> with the following content</li>
+</ol>
+<pre><code>SUBSYSTEM==&quot;usb&quot;, ATTR{idVendor}==&quot;05c6&quot;, MODE=&quot;0666&quot;, GROUP=&quot;plugdev&quot;</code></pre>
+<p>Where idVendor is a device specific code, <code>05c6</code> is the code for the Keon device. Make sure to reboot the device if you have issues or <a href="https://developer.mozilla.org/en-US/Firefox_OS/Using_the_App_Manager#Troubleshooting">read more about troubleshooting</a></p>
+<h3 id="using-the-app-manager">Using the App manager</h3>
+<p>The <a href="https://developer.mozilla.org/en-US/Firefox_OS/Using_the_App_Manager">App manager</a> allows you to load applications in the browser and the send them to your device or to the <a href="https://ftp.mozilla.org/pub/mozilla.org/labs/fxos-simulator/">Firefox OS simulator</a>.</p>
+<p>To access the App manager type in <code>about:app-manager</code> or go to Tool &gt; Web Developer &gt; App Manager. Here you can load you application manifest which you could serve using a local server.</p>
+<p><img src="http://imgur.com/I98onp9.png" alt="ScreenShot"></p>
+<p>Submitting the manifest should make your application available in the app manager. Here you have an update button that allows you to submit changes to your device every time you update.</p>
+<p>You should be able to connect to your device</p>
+<p><img src="http://imgur.com/oFoLMFy.png" alt="ScreenShot"></p>
+<p>There is also a debug button specific to each application that you can use to essentially have a Developer Tool instance connected to your phone which is an indispensable tool.
+There are some features missing, like the Network tab, but other than that Console, Style Editor, Debugger, Inspector are all available, even hovering over DOM elements will be highlighting on the device :)</p>
+<p><img src="http://imgur.com/ZasBnvI.png" alt="ScreenShot"></p>
+<p><img src="http://imgur.com/U6LZMJR.png" alt="ScreenShot"></p>
+<p>Happy hacking! :)</p>
+</div>
+
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'andreio'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  </div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-45622607-1', 'andreio.net');
+  ga('send', 'pageview');
+
+</script>
+</body>
+
+</html>
