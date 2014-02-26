@@ -24,9 +24,11 @@ module.exports = function (grunt) {
 };
 
 function createHTML (file) {
+  var time = file.filename.split('_');
+  time = time.slice(time.length-3, time.length).join(' ');
   return {
     filename: file.filename,
-    title: '<h3><a href="' + file.filename + '.html">' + file.title + '</a></h3>'
+    title: '<h3><a href="' + file.filename + '.html">' + file.title + '</a><time>'+time+'</time></h3>'
   }
 }
 

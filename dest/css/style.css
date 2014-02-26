@@ -53,6 +53,14 @@ article a {
   border-bottom: 1px dotted #888;
 }
 
+.banner {
+  text-align:center;
+}
+
+.social-links {
+  font-size: .8rem;
+}
+
 .banner h1, .banner h4 {
   font-family: 'Lato', sans-serif;
   font-weight: 900;
@@ -61,7 +69,7 @@ article a {
 }
 
 .banner h1 {
-  font-size: 3.375rem;  
+  font-size: 3.375rem;
 }
 
 .banner h4 {
@@ -76,6 +84,8 @@ h3 {
 time {
   float: right;
   font-size: .8rem;
+  line-height: 1rem;
+  line-height: 2rem;
 }
 
 .article-resume {
@@ -88,26 +98,12 @@ time {
   border-radius: 50%;
   border: 3px solid #fff;
   box-shadow: 0 0 5px #aaa;
-  -webkit-transition-duration: 1s;
-  -moz-transition-duration: 1s;
-  transition-duration: 1s;
 }
-
-.mugshot:hover {
-  -webkit-transform: rotateY(360deg);
-  -moz-transform: rotateY(360deg);
-  transform: rotateY(360deg);
-}
-
 
 .article-title {
   font-size: 1.875rem;
   border-bottom: 1px solid #f2f2f0;
   font-weight: bold;
-}
-
-.banner {
-  text-align:center;
 }
 
 .circle {
