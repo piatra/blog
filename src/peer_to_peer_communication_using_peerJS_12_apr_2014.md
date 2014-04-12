@@ -87,7 +87,7 @@ peer.on('connection', function(conn) {
 
 ## Demo <a name="demo"></a>
 
-[Gist]() and [working example]()
+[Gist](https://gist.github.com/piatra/10526052) and [working example](http://piatra.github.io/blog/examples/peerjsdemo.html)
 
 Also checkout out [kreator.js](http://piatra.github.io/kreator.js/) for a real world use case.
 
