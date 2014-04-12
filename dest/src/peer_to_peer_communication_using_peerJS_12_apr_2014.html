@@ -1,0 +1,138 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <title>
+    Andrei's Blog
+  </title>
+  <link rel="styhesheet" href="../css/normalize.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Lato:900" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="about">
+  <figure>
+    <img src="../img/me.png" class="mugshot">
+    <br>
+    <strong>Andrei Oprea</strong>
+  </figure>
+  <li>
+      &sdot; <a href="http://github.com/piatra">github</a> &sdot;
+      <a href="http://twitter.com/ndreio">twitter</a> &sdot;
+      <a href="mailto:me@andreio.net">email</a> &sdot;
+  </li>
+  <h5><a href="/">Back</a></h5>
+</div>
+<div class="container">
+  <div class="articles"><h1 id="peer-to-peer-communication-using-peerjs">Peer to peer communication using peerJS</h1>
+<hr>
+<ul>
+<li><h3 id="-motivation-motivation-"><a href="#motivation">Motivation</a></h3>
+</li>
+<li><h3 id="-introduction-introduction-"><a href="#introduction">Introduction</a></h3>
+</li>
+<li><h3 id="-peerjs-peerjs-"><a href="#peerjs">PeerJS</a></h3>
+<ul>
+<li><h5 id="-a-look-a-the-api-api101-"><a href="#api101">A look a the API</a></h5>
+</li>
+<li><h5 id="-utility-functions-utility-"><a href="#utility">Utility functions</a></h5>
+</li>
+</ul>
+</li>
+<li><h3 id="-demo-s-demo-"><a href="#demo">Demo(s)</a></h3>
+</li>
+</ul>
+<hr>
+<p>I&#39;ve included peerJS in my project <a href="http://piatra.github.io/kreator.js/">kreator.js</a> and now you can use your mobile phone to control the slides without any server involvement (bonus points). The setup is fairly easy and it works on most modern devices.</p>
+<h2 id="motivation-a-name-motivation-a-">Motivation <a name="motivation"></a></h2>
+<p>PeerJS takes advantage of the latest WebRTC features to implement peer to peer communication entirely client side. This means that you can have complete web applications that talk to each other and exchange data without a backend.</p>
+<p>Another advantage is the fact that communication speed is limited only by the speed of the  peers. Not having a 3rd party server means no latency overhead.</p>
+<h2 id="introduction-a-name-introduction-a-">Introduction <a name="introduction"></a></h2>
+<p>DataChannel API is part of webRTC that enables real time communication in the browser without any plugins. WebRTC is comprised of MediaStream, RTCPeerConnection and RTCDataChannel.</p>
+<p><strong>MediaStream</strong> (aka getUserMedia) <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator.getUserMedia">page on MDN</a> Supported by <img src="https://raw.github.com/alrra/browser-logos/master/firefox/firefox_16x16.png" alt="FirefoxBrowser"> <img src="https://raw.github.com/alrra/browser-logos/master/chrome/chrome_16x16.png" alt="ChromeBrowser"> <img src="https://raw.github.com/alrra/browser-logos/master/opera/opera_16x16.png" alt="OperaBrowser"> and Blackberry 10.</p>
+<p>Gives you access to the user webcam and microphone. Support (behind appropriate prefix) in all browsers except Safari and Internet Explorer.</p>
+<p><strong>RTCPeerConnection</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection">page on MDN</a> Supported by <img src="https://raw.github.com/alrra/browser-logos/master/firefox/firefox_16x16.png" alt="FirefoxBrowser"> <img src="https://raw.github.com/alrra/browser-logos/master/chrome/chrome_16x16.png" alt="ChromeBrowser"> <img src="https://raw.github.com/alrra/browser-logos/master/opera/opera_16x16.png" alt="OperaBrowser"></p>
+<p>Handles efficient streaming of data between two peers</p>
+<p><strong>RTCDataChannel</strong> <a href="http://www.html5rocks.com/en/tutorials/webrtc/datachannels/">page on HTML5rocks</a> Not sure about support </p>
+<p>Allows for data transfer directly from one peer to another.</p>
+<h2 id="peerjs-a-name-peerjs-a-">PeerJS <a name="peerjs"></a></h2>
+<p><a href="http://peerjs.com/">PeerJS</a> is a wrapper of the browser implementation of WebRTC. It offers abstraction for easy-to-use peer-to-peer connections.</p>
+<h4 id="a-quick-look-at-the-api-a-name-api101-a-">A quick look at the API <a name="api101"></a></h4>
+<p>The first thing you need to do is instanciate a new Peer object. This will provide you with methods to connect to other users or receive connections yourself.</p>
+<pre><code>var peer = new Peer({key: &#39;myapikey&#39;});</code></pre>
+<p>You need to register with peerJS in order to receive an API key, but don&#39;t worry it&#39;s all free. They also offer a CDN network to serve the library or you could host it yourself.</p>
+<p><em>Find out your ID</em></p>
+<pre><code>peer.on(&#39;open&#39;, function(id) {
+  console.log(&#39;My peer ID is: &#39; + id);
+});</code></pre>
+<p><em>Sending a message to another peer.</em></p>
+<pre><code>var conn = peer.connect(&#39;another-peers-id&#39;); // who to connect to
+conn.on(&#39;open&#39;, function(){ // when the connection is ready
+  // send a string
+  conn.send(&#39;hi!&#39;);
+  // or a JSON object
+  conn.send({
+    username: &#39;andrei&#39;,
+    message: &#39;hello&#39;
+  });
+});</code></pre>
+<p>You can send strings, JSON, blobs or ArrayBuffers.</p>
+<p><em>Listening for incoming connections</em></p>
+<pre><code>peer.on(&#39;connection&#39;, function(conn) {
+  // this event is triggered when a connection
+  // has been established with a remote peer
+
+  // we can use the `conn` object to listen for data events
+  conn.on(&#39;open&#39;, function() {
+    conn.on(&#39;data&#39;, function(data) {
+        // data contains the received message
+        console.log(data);
+    });
+
+    // we can also send back messages to the peer
+    conn.send(&#39;Hi!&#39;);
+  });
+});</code></pre>
+<h2 id="demo-a-name-demo-a-">Demo <a name="demo"></a></h2>
+<p><a href="">Gist</a> and <a href="">working example</a></p>
+<p>Also checkout out <a href="http://piatra.github.io/kreator.js/">kreator.js</a> for a real world use case.</p>
+<h2 id="caveats">Caveats</h2>
+<p>Sometimes you can&#39;t connect to the other peer due to network configuration (<a href="http://en.wikipedia.org/wiki/Network_address_translation">read more</a>) in which case you need to use a TURN server </p>
+<h2 id="utils">Utils</h2>
+<p>The library also provides a set of utility methods that provide you with information about the browser support.</p>
+<pre><code>// if browser supports media stream and peer connection
+util.supports.audioVideo // true or false</code></pre>
+</div>
+
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'andreio'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  </div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-45622607-1', 'andreio.net');
+  ga('send', 'pageview');
+
+</script>
+</body>
+
+</html>

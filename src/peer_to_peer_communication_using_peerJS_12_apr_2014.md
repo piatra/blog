@@ -8,7 +8,7 @@
 * ### [Demo(s)](#demo)
 ----
 
-I've included peerJS in my project [kreator.js](http://piatra.github.io/kreator.js/) and now you can use your mobile phone to control the slides without any server involvment (bonus points). The setup is fairly easy and it works on most modern devices.
+I've included peerJS in my project [kreator.js](http://piatra.github.io/kreator.js/) and now you can use your mobile phone to control the slides without any server involvement (bonus points). The setup is fairly easy and it works on most modern devices.
 
 ## Motivation <a name="motivation"></a>
 
@@ -89,7 +89,7 @@ peer.on('connection', function(conn) {
 
 [Gist]() and [working example]()
 
-Also heckout out [kreator.js](http://piatra.github.io/kreator.js/) for a real world use case.
+Also checkout out [kreator.js](http://piatra.github.io/kreator.js/) for a real world use case.
 
 ## Caveats
 
